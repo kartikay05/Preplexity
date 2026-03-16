@@ -28,3 +28,16 @@ export const registerValidator = [
         .isLength({ min: 6 }).withMessage("Password must be at least 6 characters"),
     validate
 ]
+
+export const loginValidator = [
+    body("email")
+        .trim()
+        .notEmpty()
+        .withMessage("Email or Username is required"),
+
+    body("password")
+        .trim()
+        .notEmpty().withMessage("Password is required"),
+
+    validate
+]
