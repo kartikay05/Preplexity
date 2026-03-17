@@ -11,7 +11,6 @@ const transporter = nodemailer.createTransport({
     },
 });
 
-// Verify the connection configuration
 transporter.verify()
     .then(() => { console.log("Email transporter is ready to send emails"); })
     .catch((err) => { console.error("Email transporter verification failed:", err); });
@@ -27,7 +26,6 @@ export async function sendMail({ to, subject, html, text }) {
 
     try {
         const details = await transporter.sendMail(mailOptions);
-        // console.log("Email send: ", details);
         return details;
     } catch (error) {
         console.error("Error sending email: ", error);

@@ -1,13 +1,12 @@
 import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
-
-const model = new ChatGoogleGenerativeAI({
+import { ChatMistralAI } from "@langchain/mistralai";
+const geminiModel = new ChatGoogleGenerativeAI({
     model: "gemini-2.5-flash-lite",
     apiKey: process.env.GEMINI_API_KEY
 });
 
-export async function testAi() {
-    model.invoke("What is the capital of India?")
-        .then((response) => {
-            console.log(response.text)
-        })
-}
+const mistralaimodel = new ChatMistralAI({
+    model: "mistral-small-latest",
+    apiKey: process.env.MISTRAL_API_KEY
+})
+

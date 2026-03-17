@@ -9,7 +9,7 @@ const app = express()
 
 // Security Middleware
 app.use(helmet())
-app.use(cors({ origin: process.env.CLIENT_URL || "http://localhost:5173", credentials: true }))
+app.use(cors({ origin: process.env.CLIENT_URL || "http://localhost:5173", credentials: true,  methods: [ "GET", "POST", "PUT", "DELETE" ] }))
 
 // Logging
 app.use(morgan("dev"))
@@ -29,7 +29,7 @@ app.use('/api/auth', authRouter)
 // Global Error Handler
 app.use((err, req, res, next) => {
     console.error(err.stack);
-    
+
     res.status(err.status || 500).json({
         success: false,
         message: err.message || "Internal Server Error",
