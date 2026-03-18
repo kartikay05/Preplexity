@@ -30,7 +30,7 @@ export const registerValidator = [
 ]
 
 export const loginValidator = [
-    body("email")
+    body("identifier")
         .trim()
         .notEmpty()
         .withMessage("Email or Username is required"),

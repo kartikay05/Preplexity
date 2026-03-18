@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
+import { useCustomToast } from "../../../app/ToastProvider";
 
 const Login = () => {
   const { handleLogin } = useAuth();
+  const showToast = useCustomToast();
 
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    email: "",
+    identifier: "",
     password: "",
   });
 
@@ -29,10 +31,8 @@ const Login = () => {
   // ── Validation ──
   const validate = () => {
     const newErrors = {};
-    if (!formData.email.trim()) {
-      newErrors.email = "Email is required.";
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = "Enter a valid email address.";
+    if (!formData.identifier.trim()) {
+      newErrors.identifier = "Username or Email is required.";
     }
     if (!formData.password) {
       newErrors.password = "Password is required.";
@@ -54,10 +54,11 @@ const Login = () => {
     setIsLoading(true);
     try {
       await handleLogin(formData);
-      await new Promise((r) => setTimeout(r, 1500)) // Simulated delay
+      showToast("Login successful!", "success");
       navigate("/");
     } catch (err) {
       console.error("Login error:", err);
+      showToast(err.response?.data?.message || "Login failed", "error");
     } finally {
       setIsLoading(false);
     }
@@ -95,52 +96,52 @@ const Login = () => {
             className="text-sm mt-1"
             style={{ color: "var(--text-secondary)" }}
           >
-            Sign in to your Perplexity account
+            Sign in to your Krt.ai account
           </p>
         </div>
 
         {/* ── Form ── */}
         <form onSubmit={handleSubmit} noValidate className="space-y-5">
-          {/* Email */}
+          {/* Identifier (Email/Username) */}
           <div className="flex flex-col gap-1.5">
             <label
-              htmlFor="login-email"
+              htmlFor="login-identifier"
               className="text-sm font-medium"
               style={{ color: "var(--text-primary)" }}
             >
-              Email address
+              Username or Email
             </label>
             <input
-              value={formData.email}
-              id="login-email"
-              type="email"
-              name="email"
+              value={formData.identifier}
+              id="login-identifier"
+              type="text"
+              name="identifier"
               onChange={handleChange}
-              placeholder="you@example.com"
-              autoComplete="email"
+              placeholder="Username or email"
+              autoComplete="username"
               className="w-full px-4 py-3 rounded-xl text-sm outline-none transition-all duration-200"
               style={{
                 background: "var(--input-bg)",
-                border: `1.5px solid ${errors.email ? "var(--danger)" : "var(--input-border)"}`,
+                border: `1.5px solid ${errors.identifier ? "var(--danger)" : "var(--input-border)"}`,
                 color: "var(--text-primary)",
               }}
               onFocus={(e) =>
-                (e.target.style.borderColor = errors.email
+                (e.target.style.borderColor = errors.identifier
                   ? "var(--danger)"
                   : "var(--input-focus)")
               }
               onBlur={(e) =>
-                (e.target.style.borderColor = errors.email
+                (e.target.style.borderColor = errors.identifier
                   ? "var(--danger)"
                   : "var(--input-border)")
               }
             />
-            {errors.email && (
+            {errors.identifier && (
               <span
                 className="text-xs font-medium"
                 style={{ color: "var(--danger)" }}
               >
-                {errors.email}
+                {errors.identifier}
               </span>
             )}
           </div>

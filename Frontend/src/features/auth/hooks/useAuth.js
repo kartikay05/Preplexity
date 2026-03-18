@@ -11,26 +11,28 @@ export function useAuth() {
             const data = await register({ email, username, password })
         } catch (error) {
             dispatch(setError(error.response?.data?.message || "Registration failed"))
-        }
-        finally {
-            setLoading(false)
-        }
-    }
-
-    async function handleLogin({ email, password }) {
-        try {
-            dispatch(setLoading(true))
-            const data = await login({ email, password })
-            dispatch(setUser(data.user))
-        } catch (error) {
-            dispatch(setError(error.response?.data?.message || "Login failed"))
+            throw error
         }
         finally {
             dispatch(setLoading(false))
         }
     }
 
-    async function handlegetMe() {
+    async function handleLogin({ identifier, password }) {
+        try {
+            dispatch(setLoading(true))
+            const data = await login({ identifier, password })
+            dispatch(setUser(data.user))
+        } catch (error) {
+            dispatch(setError(error.response?.data?.message || "Login failed"))
+            throw error
+        }
+        finally {
+            dispatch(setLoading(false))
+        }
+    }
+
+    async function handleGetMe() {
         try {
             dispatch(setLoading(true))
             const data = await getMe()
@@ -42,5 +44,5 @@ export function useAuth() {
         }
     }
 
-    return { handleLogin, handleRegister, handlegetMe }
+    return { handleLogin, handleRegister, handleGetMe }
 } 

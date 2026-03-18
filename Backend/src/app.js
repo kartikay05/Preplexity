@@ -1,9 +1,10 @@
 import express from "express";
-import authRouter from "./routes/auth.routes.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
+import authRouter from "./routes/auth.routes.js";
+import chatRouter from "./routes/chat.routes.js";
 
 const app = express()
 
@@ -25,6 +26,7 @@ app.get('/', (req, res) => {
 })
 
 app.use('/api/auth', authRouter)
+app.use('/api/chats', chatRouter)
 
 // Global Error Handler
 app.use((err, req, res, next) => {

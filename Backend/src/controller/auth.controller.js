@@ -40,7 +40,7 @@ export const register = asyncHandler(async (req, res) => {
         subject: "Welcome to Perplexity-Krt!",
         html: `
                 <p>Hi ${username},</p>
-                <p>Thank you for registering at <strong>Perplexity</strong>. We're excited to have you on board!</p>
+                <p>Thank you for registering at <strong>KRT AI</strong>. We're excited to have you on board!</p>
                 <p>Please verify your email address by clicking the link below:</p>
                 <a href="${process.env.DOMAIN_URL}/api/auth/verify-email?token=${emailVerificationToken}">Verify Email</a>
                 <p>If you did not create an account, please ignore this email.</p>
@@ -68,18 +68,18 @@ export const register = asyncHandler(async (req, res) => {
  */
 
 export const login = asyncHandler(async (req, res) => {
-    const { email, password } = req.body;
+    const { identifier, password } = req.body;
 
     const user = await userModel.findOne({
         $or: [
-            { email: email },
-            { username: email }
+            { email: identifier },
+            { username: identifier }
         ]
     });
 
     if (!user) {
         return res.status(400).json({
-            message: "Invalid Email Or Password",
+            message: "Invalid Username/Email Or Password",
             success: false,
             err: "User not Found"
         })

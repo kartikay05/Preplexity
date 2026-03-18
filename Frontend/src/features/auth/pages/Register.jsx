@@ -1,7 +1,13 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { useAuth } from '../hooks/useAuth'
+import { useCustomToast } from '../../../app/ToastProvider'
 
 const Register = () => {
+  const { handleRegister } = useAuth()
+  const showToast = useCustomToast()
+  const navigate = useNavigate()
+
   // ── Two-way binding state ──
   const [formData, setFormData] = useState({
     username: '',
@@ -55,10 +61,13 @@ const Register = () => {
 
     setIsLoading(true)
     try {
-      
-      await new Promise((r) => setTimeout(r, 1500)) // Simulated delay
+      await handleRegister(formData)
+      showToast('Registration successful! Please check your email to verify your account.', 'success')
+      navigate('/login')
     } catch (err) {
       console.error('Register error:', err)
+      const errorMsg = err.response?.data?.message || 'Registration failed'
+      showToast(errorMsg, 'error')
     } finally {
       setIsLoading(false)
     }
@@ -104,7 +113,7 @@ const Register = () => {
             Create an account
           </h1>
           <p className="text-sm mt-1" style={{ color: 'var(--text-secondary)' }}>
-            Join Perplexity and start exploring
+            Join Krt.ai and start exploring
           </p>
         </div>
 
