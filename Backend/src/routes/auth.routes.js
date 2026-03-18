@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { register, login, getMe, verifyEmail } from "../controller/auth.controller.js";
+import { register, login, getMe, verifyEmail, logout } from "../controller/auth.controller.js";
 import { registerValidator, loginValidator } from "../validators/auth.validator.js";
 import { authUser } from "../middlewares/auth.middleware.js";
 import rateLimit from "express-rate-limit";
@@ -49,5 +49,15 @@ authRouter.get('/get-me', authUser, getMe)
  */
 
 authRouter.get('/verify-email', verifyEmail)
+
+
+/**
+ * @route GET /api/auth/logout [Protected]
+ * @desc Logout a user by clear it's cookies
+ * @access Public
+ 
+ */
+
+authRouter.get('/logout', logout)
 
 export default authRouter; 

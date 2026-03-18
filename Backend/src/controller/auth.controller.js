@@ -60,7 +60,6 @@ export const register = asyncHandler(async (req, res) => {
 });
 
 /**
- * 
  * @desc Login a user 
  * @route POST /api/auth/login
  * @access Public
@@ -125,7 +124,6 @@ export const login = asyncHandler(async (req, res) => {
  * @desc Get current logged in user's details
  * @route GET /api/auth/get-me
  * @access Private
- *
  */
 
 export const getMe = asyncHandler(async (req, res) => {
@@ -191,4 +189,19 @@ export const verifyEmail = asyncHandler(async (req, res) => {
             err: err.message
         })
     }
+});
+
+/**
+ * @desc Logout a user by clearing cookies
+ * @route GET /api/auth/logout
+ * @access Private
+ */
+
+export const logout = asyncHandler(async (req, res) => {
+    res.clearCookie("token");
+
+    res.status(200).json({
+        message: "User logged out successfully",
+        success: true
+    });
 });
