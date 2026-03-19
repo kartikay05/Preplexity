@@ -50,12 +50,10 @@ authRouter.get('/get-me', authUser, getMe)
 
 authRouter.get('/verify-email', verifyEmail)
 
-
 /**
  * @route GET /api/auth/logout [Protected]
  * @desc Logout a user by clear it's cookies
  * @access Public
- 
  */
 
 authRouter.get('/logout', logout)

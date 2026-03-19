@@ -28,6 +28,9 @@ const chatSlice = createSlice({
         addMessage: (state, action) => {
             state.messages.push(action.payload);
         },
+        addChat: (state, action) => {
+            state.chats.unshift(action.payload);
+        },
         updateChatTitle: (state, action) => {
             const { chatId, title } = action.payload;
             const chat = state.chats.find(c => c._id === chatId);
@@ -43,6 +46,7 @@ export const {
     setLoading, 
     setError, 
     addMessage,
+    addChat,
     updateChatTitle 
 } = chatSlice.actions;
 
