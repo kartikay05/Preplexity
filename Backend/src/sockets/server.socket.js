@@ -5,10 +5,12 @@ let io;
 export function initSocket(httpServer) {
     io = new Server(httpServer, {
         cors: {
-            origin: `${process.env.CLIENT_URL}` || "http://localhost:5173",
+            origin: `${process.env.CLIENT_URL}`,
             credentials: true
         }
     })
+
+    console.log("Socket.io server is RUNNING")
 
     io.on("connection", (socket) => {
         console.log("A user connected: " + socket.id)

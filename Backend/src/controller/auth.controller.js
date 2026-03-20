@@ -177,7 +177,7 @@ export const verifyEmail = asyncHandler(async (req, res) => {
             `
         <h1>Email Verified Successfully!</h1>
         <p>Your email has been verified. You can now log in to your account.</p>
-        <a href="${process.env.CLIENT_URL || 'http://localhost:5173'}/login">Go to Login</a>
+        <a href="${process.env.CLIENT_URL}/login">Go to Login</a>
     `
 
         return res.send(html);
