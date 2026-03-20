@@ -3,11 +3,17 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
+import path from 'path';
 
 const app = express()
 
 // Security Middleware
-app.use(helmet())
+app.use(
+    helmet({
+        contentSecurityPolicy: false,
+    })
+);
+
 app.use(cors({ origin: process.env.CLIENT_URL, credentials: true, methods: ["GET", "POST", "PUT", "DELETE"] }))
 
 // Logging
@@ -24,6 +30,10 @@ import chatRouter from "./routes/chat.routes.js";
 
 app.use('/api/auth', authRouter)
 app.use('/api/chats', chatRouter)
+
+app.get("*", (req, res) => {
+    res.sendFile(path.resolve("./public/index.html"));
+});
 
 // Global Error Handler
 app.use((err, req, res, next) => {
