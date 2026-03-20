@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import { useCustomToast } from "../../../app/ToastProvider";
+import ThemeToggle from "../../../app/ThemeToggle";
 
 const Login = () => {
   const { handleLogin } = useAuth();
@@ -66,9 +67,13 @@ const Login = () => {
 
   return (
     <div
-      className="min-h-screen flex items-center justify-center px-4 py-12"
+      className="min-h-screen flex items-center justify-center px-4 py-12 relative"
       style={{ background: "var(--gradient-bg)" }}
     >
+      <div className="absolute top-6 right-6 z-50">
+        <ThemeToggle />
+      </div>
+
       {/* ── Card ── */}
       <div
         className="w-full max-w-md rounded-2xl p-8 sm:p-10"

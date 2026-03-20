@@ -64,7 +64,7 @@ const ChatInput = () => {
     <div className="w-full max-w-3xl mx-auto px-4">
       <form
         onSubmit={handleSubmit}
-        className="relative bg-zinc-900/50 backdrop-blur-xl border border-white/10 rounded-2xl p-2 shadow-2xl transition-all focus-within:border-white/20"
+        className="relative bg-white/80 dark:bg-zinc-900/50 backdrop-blur-xl border border-zinc-200 dark:border-white/10 rounded-2xl p-2 shadow-xl dark:shadow-2xl transition-all focus-within:border-zinc-300 dark:focus-within:border-white/20"
       >
         <div className="flex items-center justify-between px-2 pt-1 pb-1">
           <textarea
@@ -78,7 +78,7 @@ const ChatInput = () => {
               }
             }}
             placeholder="Ask anything..."
-            className="w-full bg-transparent border-none outline-none resize-none text-white px-4 py-3 placeholder-zinc-500 text-lg leading-relaxed"
+            className="w-full bg-transparent border-none outline-none resize-none text-zinc-800 dark:text-white px-4 py-3 placeholder-zinc-400 dark:placeholder-zinc-500 text-lg leading-relaxed"
           />
 
           <button
@@ -88,13 +88,13 @@ const ChatInput = () => {
                             px-4 py-2 rounded-xl flex items-center gap-2 font-medium transition-all
                             ${
                               input.trim() && !loading
-                                ? "bg-indigo-600 text-white shadow-lg shadow-indigo-600/20"
-                                : "bg-zinc-800 text-zinc-500 cursor-not-allowed"
+                                ? "bg-indigo-600 text-white shadow-lg shadow-indigo-600/20 hover:bg-indigo-700"
+                                : "bg-zinc-100 dark:bg-zinc-800 text-zinc-400 dark:text-zinc-500 cursor-not-allowed"
                             }
                         `}
           >
             {loading ? (
-              <div className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin" />
+              <div className="w-5 h-5 border-2 border-zinc-300 gap-2 overflow-hidden border-t-indigo-600 dark:border-white/20 dark:border-t-white rounded-full animate-spin" />
             ) : (
               <svg
                 className="w-5 h-5"

@@ -7,7 +7,6 @@ export async function sendMessage(req, res) {
     const { message, chat: chatId } = req.body
 
     let title = null, chat = null
-
     if (!chatId) {
         title = await generateChatTitle(message)
         chat = await chatModel.create({
