@@ -54,7 +54,7 @@ export const ToastProvider = ({ children }) => {
                         {/* Content */}
                         <div className="flex-1 min-w-0">
                             <p className="text-sm font-medium leading-tight truncate-multiline">
-                                {toast.message}
+                                {toast.message }
                             </p>
                         </div>
 
