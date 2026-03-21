@@ -34,9 +34,9 @@ export async function generateChatTitle(message) {
         `),
         new HumanMessage(`
             Generate a title for a chat conversation based on the following first message:
-            "${message}"
+            ${message}
             `)
     ])
 
-    return response.text
+    return response.text.replace(/^["']+|["']+$/g, '').trim();
 }

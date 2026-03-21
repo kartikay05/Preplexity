@@ -14,7 +14,7 @@ app.use(
     })
 );
 
-app.use(cors({ origin: true, credentials: true, methods: ["GET", "POST", "PUT", "DELETE"] }))
+app.use(cors({ origin: process.env.CLIENT_URL, credentials: true, methods: ["GET", "POST", "PUT", "DELETE"] }))
 
 // Logging
 app.use(morgan("dev"))
@@ -35,6 +35,12 @@ app.use('/api/chats', chatRouter)
 app.get(/.*/, (req, res) => {
     res.sendFile(path.resolve("./public/index.html"));
 });
+
+
+// Health check
+app.get('/', (req, res) => {
+    res.json({ "message": "Server is running." })
+})
 
 // Global Error Handler
 app.use((err, req, res, next) => {

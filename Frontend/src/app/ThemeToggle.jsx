@@ -7,7 +7,7 @@ const ThemeToggle = () => {
   return (
     <button
       onClick={toggleTheme}
-      className="p-2 rounded-xl transition-all duration-300 hover:bg-zinc-800/10 dark:hover:bg-zinc-200 focus:outline-none flex items-center justify-center group"
+      className="p-2 rounded-xl transition-all duration-300 focus:outline-none flex items-center justify-center group"
       aria-label="Toggle Dark Mode"
     >
       <div className="relative w-6 h-6 flex items-center justify-center">
@@ -19,6 +19,7 @@ const ThemeToggle = () => {
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
+          aria-hidden="true"
         >
           <path
             strokeLinecap="round"
@@ -36,6 +37,7 @@ const ThemeToggle = () => {
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
+          aria-hidden="true"
         >
           <path
             strokeLinecap="round"

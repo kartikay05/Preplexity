@@ -1,7 +1,8 @@
 import axios from 'axios';
+const url = import.meta.env.DOMAIN_URL;
 
 const api = axios.create({
-    baseURL: 'https://preplexity.onrender.com',
+    baseURL: `https://preplexity.onrender.com`,
     withCredentials: true,
 });
 

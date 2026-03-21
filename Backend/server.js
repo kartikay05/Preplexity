@@ -10,7 +10,7 @@ const httpServer = http.createServer(app)
 
 initSocket(httpServer)
 
-const server = httpServer.listen(PORT, ()=>{
+const server = httpServer.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`)
 })
 

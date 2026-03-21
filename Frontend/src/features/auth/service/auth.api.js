@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const api = axios.create({
-    baseURL: "https://preplexity.onrender.com",
+    baseURL: `https://preplexity.onrender.com`,
     withCredentials: true
 })
 
@@ -15,7 +15,7 @@ export async function register({ username, email, password }) {
     return response.data
 }
 
-export async function getMe(){
+export async function getMe() {
     const response = await api.get('/api/auth/get-me')
     return response.data
 }
