@@ -37,7 +37,7 @@ export const register = asyncHandler(async (req, res) => {
 
     await sendMail({
         to: email,
-        subject: "Welcome to Perplexity-Krt!",
+        subject: "Welcome to Kartikay-AI!",
         html: `
                 <p>Hi ${username},</p>
                 <p>Thank you for registering at <strong>KRT AI</strong>. We're excited to have you on board!</p>

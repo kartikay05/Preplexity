@@ -2,9 +2,11 @@ import axios from 'axios';
 const url = import.meta.env.DOMAIN_URL;
 
 const api = axios.create({
-    baseURL: `https://preplexity.onrender.com`,
+    baseURL: `/`,
     withCredentials: true,
 });
+
+// baseURL: "http://localhost:5000",
 
 export const fetchChats = async () => {
     const response = await api.get('/api/chats');

@@ -1,26 +1,30 @@
-import { Resend } from "resend";
+import SibApiV3Sdk from "sib-api-v3-sdk";
+const client = SibApiV3Sdk.ApiClient.instance;
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Auth
+const apiKey = client.authentications["api-key"];
+apiKey.apiKey = process.env.Brevo_SMTP_API_KEY;
+
+const emailApi = new SibApiV3Sdk.TransactionalEmailsApi();
 
 export async function sendMail({ to, subject, html, text }) {
-    try {
-        const response = await resend.emails.send({
-            from: "noreply@resend.dev",
-            to,
-            subject,
-            html,
-            text,
-        });
+  try {
+    const response = await emailApi.sendTransacEmail({
+      sender: {
+        email: "kartikaynbb@gmail.com",
+        name: "KRT AI",
+      },
+      to: [{ email: to }],
+      subject,
+      htmlContent: html,
+    });
 
-        // if (process.env.NODE_ENV == "development") {
-        // }
-        console.log("Email sent:", response);
-
-        return response;
-    } catch (error) {
-        console.error("Error sending email:", error);
-        throw error;
-    }
+    console.log("Email sent:", response);
+    return response;
+  } catch (error) {
+    console.error("Brevo Error:", error);
+    throw error;
+  }
 }
 
 // const transporter = nodemailer.createTransport({
