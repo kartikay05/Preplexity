@@ -4,7 +4,6 @@ import {
   sendMessage as apiSendMessage,
   fetchMessages,
 } from "../service/chat.api";
-
 import {
   addMessage,
   setCurrentChat,
@@ -13,7 +12,6 @@ import {
   setMessages,
   addChat,
 } from "../chat.slice";
-
 import { useCustomToast } from "../../../app/ToastProvider";
 
 const ChatInput = () => {
@@ -38,16 +36,12 @@ const ChatInput = () => {
         chat: currentChat?._id,
       });
 
-      // If it was a new chat, update current chat and fetch history
       if (!currentChat) {
         dispatch(addChat(res.chat));
         dispatch(setCurrentChat(res.chat));
-        // We'll fetch all messages for the new chat to ensure sync
         const msgData = await fetchMessages(res.chat._id);
         dispatch(setMessages(msgData.messages));
       } else {
-        // If existing chat, just add the user message and AI response
-        // Actually, backend returns full aiMessage object
         const userMsg = { content: messageText, role: "user", _id: Date.now() };
         dispatch(addMessage(userMsg));
         dispatch(addMessage(res.aiMessage));
@@ -60,11 +54,19 @@ const ChatInput = () => {
     }
   };
 
+  const canSend = input.trim() && !loading;
+
   return (
     <div className="w-full max-w-3xl mx-auto px-4">
       <form
         onSubmit={handleSubmit}
-        className="relative bg-white/80 dark:bg-zinc-900/50 backdrop-blur-xl border border-zinc-200 dark:border-white/10 rounded-2xl p-2 shadow-xl dark:shadow-2xl transition-all focus-within:border-zinc-300 dark:focus-within:border-white/20"
+        className="relative rounded-xl p-1 transition-all duration-200"
+        style={{
+          background: "var(--bg-card)",
+          border: "1.5px solid var(--input-border)",
+          boxShadow: "var(--shadow-card)",
+        }}
+        onFocus={() => {}}
       >
         <div className="flex items-center justify-between px-2 pt-1 pb-1">
           <textarea
@@ -78,44 +80,52 @@ const ChatInput = () => {
               }
             }}
             placeholder="Ask anything..."
-            className="w-full bg-transparent border-none outline-none resize-none text-zinc-800 dark:text-white px-4 py-3 placeholder-zinc-400 dark:placeholder-zinc-500 text-lg leading-relaxed"
+            className="w-full bg-transparent border-none outline-none resize-none px-3 py-2 text-sm leading-relaxed transition-colors"
+            style={{
+              color: "var(--text-primary)",
+            }}
           />
 
           <button
             type="submit"
-            disabled={!input.trim() || loading}
-            className={`
-                            px-4 py-2 rounded-xl flex items-center gap-2 font-medium transition-all
-                            ${
-                              input.trim() && !loading
-                                ? "bg-indigo-600 text-white shadow-lg shadow-indigo-600/20 hover:bg-indigo-700"
-                                : "bg-zinc-100 dark:bg-zinc-800 text-zinc-400 dark:text-zinc-500 cursor-not-allowed"
-                            }
-                        `}
+            disabled={!canSend}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-semibold text-xs transition-all duration-200 shrink-0"
+            style={
+              canSend
+                ? {
+                    background: "var(--gradient-btn)",
+                    color: "#fff",
+                    boxShadow: "0 4px 15px rgba(99,102,241,0.35)",
+                  }
+                : {
+                    background: "var(--input-bg)",
+                    color: "var(--text-muted)",
+                    cursor: "not-allowed",
+                  }
+            }
+            onMouseEnter={e => { if (canSend) e.currentTarget.style.opacity = "0.9"; }}
+            onMouseLeave={e => { e.currentTarget.style.opacity = "1"; }}
           >
             {loading ? (
-              <div className="w-5 h-5 border-2 border-zinc-300 gap-2 overflow-hidden border-t-indigo-600 dark:border-white/20 dark:border-t-white rounded-full animate-spin" />
+              <div
+                className="w-5 h-5 border-2 rounded-full animate-spin"
+                style={{ borderColor: "var(--text-muted)", borderTopColor: "var(--accent)" }}
+              />
             ) : (
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M14 5l7 7m0 0l-7 7m7-7H3"
-                />
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
               </svg>
             )}
             <span>Send</span>
           </button>
         </div>
       </form>
-      <p className="text-center text-[10px] text-zinc-600 mt-4 leading-relaxed">
-        Krt AI can make mistakes. Please check important info.
+
+      <p
+        className="text-center text-[10px] mt-3 leading-relaxed"
+        style={{ color: "var(--text-muted)" }}
+      >
+        Krt AI can make mistakes. Please verify important information.
       </p>
     </div>
   );

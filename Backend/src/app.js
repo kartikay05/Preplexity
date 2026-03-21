@@ -5,6 +5,10 @@ import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
 import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 
@@ -13,19 +17,20 @@ const isProduction = process.env.NODE_ENV === "production";
 
 // -------------------- MIDDLEWARE --------------------
 app.use(
-  helmet({
-    contentSecurityPolicy: false,
-  })
+    helmet({
+        contentSecurityPolicy: false,
+    })
 );
 
 // ✅ Dynamic CORS (local + production)
 app.use(
-  cors({
-    origin: isProduction
-      ? "https://preplexity.onrender.com" // your domain
-      : "http://localhost:5173", // Vite dev server
-    credentials: true,
-  })
+    cors({
+        origin: isProduction
+            ? "https://preplexity.onrender.com"
+            : "http://localhost:5173",
+        // origin: true,
+        credentials: true,
+    })
 );
 
 app.use(morgan("dev"));
@@ -36,8 +41,7 @@ app.use(cookieParser());
 
 // -------------------- STATIC (ONLY IN PRODUCTION) --------------------
 if (isProduction) {
-  const __dirname = new URL(".", import.meta.url).pathname;
-  app.use(express.static(path.join(__dirname, "public")));
+    app.use(express.static(path.join(__dirname, "../public")));
 }
 
 // -------------------- ROUTES --------------------
@@ -49,26 +53,24 @@ app.use("/api/chats", chatRouter);
 
 // -------------------- TEST MAIL --------------------
 app.get("/api/test-mail", async (req, res) => {
-  try {
-    await sendMail({
-      to: "bhardwajkartikay489@gmail.com",
-      subject: "Brevo Test 🚀",
-      html: "<h1>It works!</h1>",
-    });
+    try {
+        await sendMail({
+            to: "bhardwajkartikay489@gmail.com",
+            subject: "Brevo Test 🚀",
+            html: "<h1>It works!</h1>",
+        });
 
-    res.send("Email sent ✅");
-  } catch (err) {
-    res.status(500).send("Email failed ❌");
-  }
+        res.send("Email sent ✅");
+    } catch (err) {
+        res.status(500).send("Email failed ❌");
+    }
 });
 
 // -------------------- REACT FALLBACK --------------------
 if (isProduction) {
-  const __dirname = new URL(".", import.meta.url).pathname;
-
-  app.get(/.*/, (req, res) => {
-    res.sendFile(path.join(__dirname, "public", "index.html"));
-  });
+    app.get(/.*/, (req, res) => {
+        res.sendFile(path.join(__dirname, "../public", "index.html"));
+    });
 }
 
 // -------------------- HEALTH CHECK --------------------
@@ -78,13 +80,13 @@ if (isProduction) {
 
 // -------------------- ERROR HANDLER --------------------
 app.use((err, req, res, next) => {
-  console.error(err.stack);
+    console.error(err.stack);
 
-  res.status(err.status || 500).json({
-    success: false,
-    message: err.message || "Internal Server Error",
-    err: process.env.NODE_ENVV === "development" ? err : undefined,
-  });
+    res.status(err.status || 500).json({
+        success: false,
+        message: err.message || "Internal Server Error",
+        err: process.env.NODE_ENVV === "development" ? err : undefined,
+    });
 });
 
 export default app;
