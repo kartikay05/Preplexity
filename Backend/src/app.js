@@ -38,9 +38,9 @@ app.get(/.*/, (req, res) => {
 
 
 // Health check
-app.get('/', (req, res) => {
-    res.json({ "message": "Server is running." })
-})
+// app.get('/', (req, res) => {
+//     res.json({ "message": "Server is running." })
+// })
 
 // Global Error Handler
 app.use((err, req, res, next) => {
