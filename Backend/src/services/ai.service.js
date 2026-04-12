@@ -2,9 +2,9 @@ import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
 import { ChatMistralAI } from "@langchain/mistralai";
 import { AIMessage, HumanMessage, SystemMessage } from 'langchain';
 
-const geminiModel = new ChatGoogleGenerativeAI({
-    model: "gemini-2.5-flash",
-    apiKey: process.env.GEMINI_API_KEY
+const geminiModel = new ChatMistralAI({
+    model: "mistral-small-latest",
+    apiKey: process.env.MISTRAL_API_KEY
 });
 
 const mistralaimodel = new ChatMistralAI({
