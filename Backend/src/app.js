@@ -15,7 +15,6 @@ const app = express();
 // -------------------- ENV CHECK --------------------
 const isProduction = process.env.NODE_ENV === "production";
 
-// -------------------- MIDDLEWARE --------------------
 app.use(
     helmet({
         contentSecurityPolicy: false,
@@ -28,7 +27,6 @@ app.use(
         origin: isProduction
             ? "https://preplexity.onrender.com"
             : "http://localhost:5173",
-        // origin: true,
         credentials: true,
     })
 );

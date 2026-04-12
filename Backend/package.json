@@ -14,7 +14,9 @@
   "dependencies": {
     "@langchain/google-genai": "^2.1.25",
     "@langchain/mistralai": "^1.0.7",
+    "axios": "^1.15.0",
     "bcryptjs": "^3.0.3",
+    "cheerio": "^1.2.0",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.6",
     "dotenv": "^17.3.1",
@@ -27,8 +29,6 @@
     "langchain": "^1.2.32",
     "mongoose": "^9.3.0",
     "morgan": "^1.10.1",
-    "nodemailer": "^8.0.2",
-    "resend": "^6.9.4",
     "sib-api-v3-sdk": "^8.5.0",
     "socket.io": "^4.8.3"
   }
